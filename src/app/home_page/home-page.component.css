@@ -1,39 +1,102 @@
-.banner-container{
+.header {
+    /* background-color: gray; */
+    padding: 1rem;
+    margin-bottom: 20px;
+}
+
+.logo {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     align-items: center;
-    height: 35%;
-    width: 100%;
-    gap: 2rem;
 }
 
-.msg-box{
+.icon {
+    font-size: 5rem;
+    font-weight: bold;
+    color: grey;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 50%;
+    margin: 1rem;
+}
+
+
+
+.title {
+    font-size: 5rem;
+    font-weight: bold;
+    color: lightgrey;
+    margin: 1rem;
+}
+
+.sub-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: lightgrey;
+    margin: 1rem;
+    width: 50%;
+    border: 2px solid lightgrey;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.banner{
+    height: 30rem;
+    width: 100%;
+    /* border: 2px solid lightgrey; */
+}
+
+
+.msg-box {
+    position: absolute;
+    top: 35rem;
+    right: 34rem;
+    color: yellow;
+    font-size: 2.4rem;
+    height: 20%;
+    width: 50%;
+    padding-top: 10px;
+    text-align: center;
+    border: 2px solid yellow;
+    border-radius: 2rem;
+}
+
+.login {
+    margin: 0 auto;
+    align-items: center;
+    height: 30rem;
+    width: 50%;
+    
+}
+
+.login-info {
     font-size: 2rem;
     text-align: center;
-    padding: 1rem;
-    height: 100%;
-    font: Abhaya Libre;
-    font-weight: bold;
+    padding: 40px;
+    color: lightgrey;
 }
 
-.box {
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #fff;
-    background-color: white;
+.spotify-login {
+    text-align: center;
+    /* border: 1px solid lightgrey; */
+    margin: 0 auto;
+    height: 50%;
+    width: 50%;
+   
 }
 
-.msg-box:hover {
-    width: 70%;
-    height: 80%;
-    box-shadow: 6px 6px 6px 6px #333;
+.spotify-logo:hover {
+    background-color: gold;
+    border-radius: 50%;
 }
 
 .create_playlist{
     background-image: url("/assets/images/headphones.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
     
 }
 
@@ -46,33 +109,10 @@
     background-image: url("/assets/images/learn.jpg");
 }
 
-
-.login-info {
+footer{
+   color: white;
+   text-align: center;
+    margin-top: 10rem;
+    padding-bottom: 2rem;
     font-size: large;
-    text-align: center;
-    padding: 40px;
-}
-
-.login-info em {
-    color: lightslategrey;
-    font-weight: 500;
-}
-
-.spotify-login {
-    height: 30%;
-    width: 30%;
-    text-align: center;
-    margin: 0 auto;
-}
-
-.spotify-logo {
-    width: 70%;
-    height: 80%;
-    margin: 0 auto;
-    margin-top: 20px;
-}
-
-.spotify-logo:hover {
-    width: 75%;
-    height: 85%;
 }
