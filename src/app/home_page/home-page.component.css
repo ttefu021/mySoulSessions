@@ -45,3 +45,34 @@
 .learn{
     background-image: url("/assets/images/learn.jpg");
 }
+
+
+.login-info {
+    font-size: large;
+    text-align: center;
+    padding: 40px;
+}
+
+.login-info em {
+    color: lightslategrey;
+    font-weight: 500;
+}
+
+.spotify-login {
+    height: 30%;
+    width: 30%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.spotify-logo {
+    width: 70%;
+    height: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.spotify-logo:hover {
+    width: 75%;
+    height: 85%;
+}
