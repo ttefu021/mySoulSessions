@@ -3,6 +3,7 @@ import { LoginService } from "./login.service";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Observable } from "rxjs";
 import { environment } from "environment";
+import { Router } from "@angular/router";
 
 @Component({
     template:`
@@ -29,19 +30,30 @@ import { environment } from "environment";
     `]
 })
 
-export class SpotifyLoginComponent{
+export class SpotifyLoginComponent {
     code: string = "";
     
-    constructor(private route: ActivatedRoute, private loginService: LoginService){
-        this.route.queryParamMap.subscribe(params => {
+    constructor(private route: ActivatedRoute, private loginService: LoginService, private router: Router){
+        this.route.queryParamMap.subscribe(async params => {
             this.code = params.get("code")||"";
-
-            loginService.getAccessToken(this.code).subscribe(response => {
-                console.log(response);
-                
-            })
-
-        
+            
+             loginService.getAccessToken(this.code).subscribe(
+                (data:any) => {
+                    console.log(data);
+                    loginService.saveToken(data);
+                    loginService.initialTokenReceived = true;
+                }
+            )
         })
+        
+        setTimeout(() => {
+            if (loginService.initialTokenReceived) {
+                this.router.navigate(['create-playlist']);
+            }
+        }
+        , 2000);
+
     }
+
+
 }

@@ -1,11 +1,22 @@
 import { Injectable } from "@angular/core";
 import { environment } from "environment";
-import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, catchError, throwError, buffer } from "rxjs";
+
 
 @Injectable()
 export class LoginService {
-    private token:string = '';
+    token:{access_token: string, refresh_token: string, 
+                    expires_in: number,  token_type: string, 
+                    scope: string} = {
+        access_token: '',
+        refresh_token: '',
+        expires_in: 0,
+        token_type: '',
+        scope: ''
+    };
+
+    initialTokenReceived: boolean = false;
 
     constructor(private http: HttpClient) {}
 
@@ -18,21 +29,34 @@ export class LoginService {
     }
 
     getAccessToken(codeReceived: string){
-        return this.http.post(
-            'https://accounts.spotify.com/api/token',
-            `grant_type=client_credentials&
-            redirect_uri=${environment.config.AuthRedirectUri}/retriveAccessToken&
-            code=${codeReceived}&
-            client_id=${environment.config.clientId}&
-            client_secret=${environment.config.clientSecret}`,
-            { headers: new HttpHeaders({
-                    'Content-Type': 'application/x-www-form-urlencoded' 
-                })
-            }
-        )
+        const tokenUrl = 'https://accounts.spotify.com/api/token';
+        const httpOtions = { headers: new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(environment.config.clientId + ':' + environment.config.clientSecret) 
+            })}
+        const body = new URLSearchParams();
+        body.set('grant_type', 'authorization_code');
+        body.set('code', codeReceived);
+        body.set('redirect_uri', environment.config.AuthRedirectUri);
+
+        return this.http.post(tokenUrl, body.toString(), httpOtions);
     }
 
-    saveToken(token:string){
+    refreshToken(refreshToken: string){
+        const tokenUrl = 'https://accounts.spotify.com/api/token';
+        const httpOtions = { headers: new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(environment.config.clientId + ':' + environment.config.clientSecret) 
+            })}
+        const body = new URLSearchParams();
+        body.set('grant_type', 'refresh_token');
+        body.set('refresh_token', refreshToken);
+
+        return this.http.post(tokenUrl, body.toString(), httpOtions);
+    }
+            
+
+    saveToken(token: any ){
         this.token = token;
     }
 
