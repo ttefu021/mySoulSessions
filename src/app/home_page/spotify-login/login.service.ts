@@ -1,10 +1,42 @@
+import { Injectable } from "@angular/core";
+import { environment } from "environment";
+import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
+import { Observable, catchError, throwError, buffer } from "rxjs";
+
+@Injectable()
 export class LoginService {
-    private _client:string = '8bfa2570040a435b91cb42f1798cef21';
+    private token:string = '';
+
+    constructor(private http: HttpClient) {}
+
     getAuthUrl() {
         return 'https://accounts.spotify.com/authorize?' +
-                'client_id=' + this._client +
+                'client_id=' + environment.config.clientId +
                 '&response_type=code&' +
-                'redirect_uri=http://localhost:4200/callback' +
-                '&scope=user-read-private%20user-read-email%20playlist-modify-public%20playlist-modify-private%20playlist-read-private%20playlist-read-collaborative%20user-library-read%20user-library-modify%20user-top-read%20user-read-recently-played%20user-follow-read%20user-follow-modify';
+                'redirect_uri=' + environment.config.AuthRedirectUri +
+                '&scope=' + environment.config.scope 
+    }
+
+    getAccessToken(codeReceived: string){
+        return this.http.post(
+            'https://accounts.spotify.com/api/token',
+            `grant_type=client_credentials&
+            redirect_uri=${environment.config.AuthRedirectUri}/retriveAccessToken&
+            code=${codeReceived}&
+            client_id=${environment.config.clientId}&
+            client_secret=${environment.config.clientSecret}`,
+            { headers: new HttpHeaders({
+                    'Content-Type': 'application/x-www-form-urlencoded' 
+                })
+            }
+        )
+    }
+
+    saveToken(token:string){
+        this.token = token;
+    }
+
+    getToken(){
+        return this.token;
     }
 }

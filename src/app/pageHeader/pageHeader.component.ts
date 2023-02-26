@@ -1,41 +1,47 @@
 import { Component } from "@angular/core";
 
 @Component({
-    selector: "bs-page-header",
+    selector: "page-header",
     template: `
-        <nav class="navbar  navbar-dark bg-light">
-            <a class="navbar-brand" href="#">
-                <div class="logo">
-                   SS
-                </div>
-                <div class="title">
-                    My Soul Sessions
-                </div>
-            </a>
-        </nav>`,
-    styles: [`
-       .navbar-brand {
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
+     <div class="header">
+        <div class="logo">
+            <div class="icon">SS</div>
+            <div class="title">MySoul Sessions</div>
+        </div>
+    </div>
+       `,
 
-        .logo {
-            font-size: 2rem;
-            font: Abhaya Libre;
-            background-color: #3C1A5B;
-            color: #fff;
-            padding: 1rem;
-            border-radius: 50%;
-        }
-        
-        .title {
-            font-size: 3rem;
-            font: Abhaya Libre;
-            color: #3C1A5B;
-            padding: 1rem;
-            font-weight: bold;
-        }
+    styles: [`
+    .header {
+        /* background-color: gray; */
+        padding: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .icon {
+        font-size: 3rem;
+        font-weight: bold;
+        color: grey;
+        background-color: white;
+        padding: 1rem;
+        border-radius: 50%;
+        margin: 1rem;
+    }
+
+    .title {
+        font-size: 3rem;
+        font-weight: bold;
+        color: lightgrey;
+        margin: 1rem;
+    }
+
+
     `]
 })
 export class PageHeaderComponent {
