@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
+    selector: "music-info",
     template:`
         <div class="container">
             <div class="info">

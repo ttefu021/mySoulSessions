@@ -32,8 +32,8 @@ import { Router } from "@angular/router";
 
 export class SpotifyLoginComponent {
     code: string = "";
-    
-    constructor(private route: ActivatedRoute, private loginService: LoginService, private router: Router){
+
+    constructor(private route: ActivatedRoute, public loginService: LoginService, private router: Router){
         this.route.queryParamMap.subscribe(async params => {
             this.code = params.get("code")||"";
             
@@ -48,7 +48,7 @@ export class SpotifyLoginComponent {
         
         setTimeout(() => {
             if (loginService.initialTokenReceived) {
-                this.router.navigate(['create-playlist']);
+                this.router.navigate(['soulSessions']);
             }
         }
         , 2000);

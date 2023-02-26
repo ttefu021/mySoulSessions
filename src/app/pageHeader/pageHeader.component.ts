@@ -1,11 +1,17 @@
 import { Component } from "@angular/core";
+import { LoginService } from "../home_page/spotify-login/login.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "page-header",
     template: `
      <div class="header">
         <div class="logo">
-            <div class="icon">SS</div>
+            <div class="icon">
+                <a href="\">
+                    SS
+                </a>
+            </div>
             <div class="title">MySoul Sessions</div>
         </div>
     </div>
@@ -41,8 +47,17 @@ import { Component } from "@angular/core";
         margin: 1rem;
     }
 
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 
+    .icon:hover {
+        color: white;
+        background-color: lightgrey;
+    }
     `]
 })
 export class PageHeaderComponent {
+
 }

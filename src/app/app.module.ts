@@ -11,6 +11,7 @@ import { DiscoverComponent } from './disvover-music/discover.component';
 import { MusicInfoComponent } from './music-info/music-info.component';
 import { SpotifyLoginComponent } from './home_page/spotify-login/spotify-login.component';
 import { HttpClientModule } from '@angular/common/http'
+import { NavTabsComponent } from './nav-tabs/nav-tabs.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http'
     CreatePlaylistComponent,
     DiscoverComponent,
     MusicInfoComponent,
-    SpotifyLoginComponent
+    SpotifyLoginComponent,
+    NavTabsComponent
   ],
   imports: [
     BrowserModule,
