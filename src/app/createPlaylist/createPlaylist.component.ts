@@ -1,39 +1,45 @@
 import { Component } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { CreatePlaylistService } from "./createPlatlist.service";
 
 @Component({
     selector: "create-playlist",
-    template: `
-    <div class="container">
-        <div class="info">
-            Generate a playlist by entering a theme
-        </div>
-        <form class="search">
-            <input type="text" placeholder="Search"/>
-            <button>search</button>
-        </form>
-        <div id="results"><div>
-    </div>
-    `,
-    styles: [`
-    .container {
-        margin-top: 20px;
-    }
-
-    .info {
-        font-size: 2rem;
-        color: lightgrey;
-        text-align: center;
-        font-weight: bold;
-        border-bottom: 2px solid blue;
-    }
-
-    .search input{
-        margin-top: 1.5rem;
-        width: 50%;
-    }
-    `]
-
+    templateUrl: './createPlaylist.component.html',
+    styleUrls: ['./createPlaylist.component.css'] 
 })
 
 export class CreatePlaylistComponent {
+    searchControl = new FormControl();
+    query: string = "";
+    results:any[] = [];
+    playlistId: string = "";
+
+    constructor(private createPlaylistService: CreatePlaylistService) {
+    }
+
+    onSearch() {
+        this.query = this.searchControl.value;
+        this.createPlaylistService.getPosssblePlaylists(this.query).subscribe(
+            (data: any) => {
+                this.results = data.tracks.items;
+                console.log(this.results);
+            });
+    }
+
+    onCreatePlaylist() {
+        const trackIds = this.createPlaylistService.getTrackIds(this.results);
+        this.createPlaylistService.createPlaylist(this.query).subscribe(
+            (data: any) => {
+                console.log(data);
+                this.playlistId = data.id;
+                this.createPlaylistService.addTracksToPlaylist(this.playlistId, trackIds).subscribe(
+                    (data: any) => {
+                        console.log(data);
+                        alert("Playlist created! Check your Spotify account for the new playlist :)");
+                    }
+                );
+            }
+        );
+        
+    }
 }

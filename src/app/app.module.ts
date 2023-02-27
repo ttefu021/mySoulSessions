@@ -12,6 +12,8 @@ import { MusicInfoComponent } from './music-info/music-info.component';
 import { SpotifyLoginComponent } from './home_page/spotify-login/spotify-login.component';
 import { HttpClientModule } from '@angular/common/http'
 import { NavTabsComponent } from './nav-tabs/nav-tabs.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CreatePlaylistService } from './createPlaylist/createPlatlist.service';
 
 @NgModule({
   declarations: [
@@ -28,9 +30,10 @@ import { NavTabsComponent } from './nav-tabs/nav-tabs.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [LoginService],
+  providers: [LoginService, CreatePlaylistService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

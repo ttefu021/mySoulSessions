@@ -37,23 +37,14 @@ export class SpotifyLoginComponent {
         this.route.queryParamMap.subscribe(async params => {
             this.code = params.get("code")||"";
             
-             loginService.getAccessToken(this.code).subscribe(
-                (data:any) => {
-                    console.log(data);
-                    loginService.saveToken(data);
-                    loginService.initialTokenReceived = true;
-                }
-            )
-        })
-        
+             loginService.getAccessToken(this.code)
+             loginService.getUserAndSaveToStorage();
+        });
+
         setTimeout(() => {
-            if (loginService.initialTokenReceived) {
-                this.router.navigate(['soulSessions']);
-            }
+            this.router.navigate(['soulSessions']);
         }
-        , 2000);
+        , 3000);
 
     }
-
-
 }

@@ -14,7 +14,7 @@ export class LoginService {
         scope: ''
     };
 
-    initialTokenReceived: boolean = false;
+    private static initialTokenReceived: boolean = false;
 
     constructor(private http: HttpClient) {}
 
@@ -37,7 +37,13 @@ export class LoginService {
         body.set('code', codeReceived);
         body.set('redirect_uri', environment.config.AuthRedirectUri);
 
-        return this.http.post(tokenUrl, body.toString(), httpOtions);
+        this.http.post(tokenUrl, body.toString(), httpOtions).subscribe(
+            (data:any) => {
+                LoginService.initialTokenReceived = true;
+                this.token = data;
+                this.saveTokenToStorage(data);
+            }
+        );
     }
 
     refreshToken(refreshToken: string){
@@ -52,13 +58,39 @@ export class LoginService {
 
         return this.http.post(tokenUrl, body.toString(), httpOtions);
     }
-            
 
-    saveToken(token: any ){
-        this.token = token;
+    getAccessTokenFromStorage(){
+        return sessionStorage.getItem('access_token');
     }
 
-    getToken(){
-        return this.token;
+    getRefreshTokenFromStorage(){
+        return sessionStorage.getItem('refresh_token');
     }
+
+    saveTokenToStorage(token: any){
+        sessionStorage.setItem('access_token', token.access_token);
+        sessionStorage.setItem('refresh_token', token.refresh_token);
+    }
+
+    removeTokenFromStorage(){
+        sessionStorage.removeItem('access_token');
+        sessionStorage.removeItem('refresh_token');
+    }
+
+    getAuthHeaderWithContentType(){
+        return { headers: new HttpHeaders({
+            'Authorization': 'Bearer ' + this.getAccessTokenFromStorage(),
+            'Content-Type': 'application/json'
+            })}
+    }
+
+    getUserAndSaveToStorage(){
+        return this.http.get(
+            'https://api.spotify.com/v1/me', 
+            this.getAuthHeaderWithContentType()).subscribe(
+                (data:any) => {
+                    sessionStorage.setItem('user_id', data.id);
+                })
+    }
+
 }
